@@ -1,47 +1,25 @@
-let caixa = document.querySelector('.caixa')
-let pesquisa = document.getElementById('pesquisa')
-
-function pag_jogador(){
-    for (let i=0;1 <= jogadores.length;i++){
-        caixa.innerHTML += `
-        <div class= "cardJogador">
-            <img src="${jogadores[i]["imagem"]}">
-            <h2 id="nome">${jogadores[i]["nome"]}</h2>
-            <h3>${jogadores[i]["posicao"]}</h3>
-            <button onclick='save_Cookie(${JSON.stringify(jogadores[i])})'>Mais...</button> 
-        </div>
-        `
-    }
-}
-
 window.onload = () => {
-    pag_jogador()
+    mostraCard()
 }
 
-function pesquisar(){
-    const pesquisa = document.getElementById('pesquisa-jogador').value.toLowerCase()
-    const card = document.getElementsByClassName('cardJogador')
+function mostraCard(){
+    let info = document.querySelector('.cardInfo')
 
-    for(let i=0; i<card.length; i++){
-        let name = card[i].querySelector(".cardJogador #nome")
+    let jogador = document.cookie.split('$') 
 
-        if(name.innerText.toLowerCase().indexOf(pesquisa) > -1){
-            card[i].style.display = ""
-        }else{
-            card[i].style.display = "none"
-        }
-    }
+    console.log(jogador)
+
+    info.innerHTML = `
+        <img src='${jogador[2]}'>
+        <h1>${jogador[3]}</h1>
+        <h2>${jogador[4]}</h2>
+        <h2>${jogador[5]}</h2>
+        <button onclick="voltar()">Voltar</button>
+    `
 }
 
-function save_Cookie(jogador){
-    document.cookie = jogador['nome'] + "$";
-    document.cookie += jogador['posicao'] + "$";
-    document.cookie += jogador['imagem'] + "$";
-    document.cookie += jogador['nome_completo'] + "$";
-    document.cookie += jogador['nascimento'] + "$";
-    document.cookie += jogador['altura_peso'] + "$";
-
-    window.location.href = './pagina_jogador/card.html'
-
+function voltar(){
     document.cookie = ''
+
+    window.location.href = '../../';
 }
